@@ -1,0 +1,279 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AreaCodeFailure" xml:space="preserve">
+    <value>Error al descargar el código de area! Inténtelo de nuevo!</value>
+  </data>
+  <data name="Authentication" xml:space="preserve">
+    <value>Autenticación ...</value>
+  </data>
+  <data name="AuthenticationFailed" xml:space="preserve">
+    <value>Error de autenticación, por favor vuelva a intentarlo!</value>
+  </data>
+  <data name="AuthorizationCodeFailed" xml:space="preserve">
+    <value>Error al descargar el código de autorización, la red está sobrecargada!</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancelado!</value>
+  </data>
+  <data name="CheckInBoot" xml:space="preserve">
+    <value>Consultando la información del chipset ...</value>
+  </data>
+  <data name="CheckModel" xml:space="preserve">
+    <value>Comprobando el modelo...</value>
+  </data>
+  <data name="ChoiceArea" xml:space="preserve">
+    <value>Por favor, escoja un area...</value>
+  </data>
+  <data name="DatabaseFailed" xml:space="preserve">
+    <value>Error al descargar la base de datos, la red está sobrecargada!</value>
+  </data>
+  <data name="DatabaseUpdate" xml:space="preserve">
+    <value>Actualizando base de datos ...</value>
+  </data>
+  <data name="DeviceInfoUpdate" xml:space="preserve">
+    <value>Actualizando la información del dispositivo ...</value>
+  </data>
+  <data name="DeviceInitialization" xml:space="preserve">
+    <value>Inicializando dispositivo ... </value>
+  </data>
+  <data name="DeviceReset" xml:space="preserve">
+    <value>Reiniciando dispositivo ...</value>
+  </data>
+  <data name="DeviceRevise" xml:space="preserve">
+    <value>Comprobando el dispositivo ...</value>
+  </data>
+  <data name="DeviceReviseFailure" xml:space="preserve">
+    <value>Error en la revisión del dispositivo, por favor reconecte el USB e inténtelo de nuevo!</value>
+  </data>
+  <data name="DeviceUpdate" xml:space="preserve">
+    <value>Actualizando dispositivo ...</value>
+  </data>
+  <data name="DeviceUpdateCompleted" xml:space="preserve">
+    <value>La actualización del dispositivo se ha completado con éxito!</value>
+  </data>
+  <data name="DeviceUpdateUnfinished" xml:space="preserve">
+    <value>El dispositivo ha sido reinicializado, no se ha terminado de actualizar!</value>
+  </data>
+  <data name="Downloading" xml:space="preserve">
+    <value>Descarando</value>
+  </data>
+  <data name="DownloadSoftware" xml:space="preserve">
+    <value>Descargando software necesario para la actualización...</value>
+  </data>
+  <data name="FindDeviceFailed" xml:space="preserve">
+    <value>No se ha detectado el dispositivo! Inténtalo de nuevo!</value>
+  </data>
+  <data name="GetAreaAccess" xml:space="preserve">
+    <value>Obteniendo area de acceso ...</value>
+  </data>
+  <data name="GetCode" xml:space="preserve">
+    <value>Obteniendo código de autorización ...</value>
+  </data>
+  <data name="InitializationFailure" xml:space="preserve">
+    <value>Error al inicializar el dispositivo! Inténtalo de nuevo!</value>
+  </data>
+  <data name="IsNewVersion" xml:space="preserve">
+    <value>Se está actualizando. El dispositivo se reiniciará en 5 segundos.</value>
+  </data>
+  <data name="ModelIsLock" xml:space="preserve">
+    <value>Éste modelo está bloqueado!</value>
+  </data>
+  <data name="NetworkCongestion" xml:space="preserve">
+    <value>La red está sobrecargada, por favor espere...</value>
+  </data>
+  <data name="NetworkDetected" xml:space="preserve">
+    <value>Se ha detectado una congetión en la red, por favor conectese de nuevo!</value>
+  </data>
+  <data name="NoFindDevice" xml:space="preserve">
+    <value>No ha sido posible detectar el dispositivo, asegurese que el modelo esté en Modo dn!</value>
+  </data>
+  <data name="OperationsBegin" xml:space="preserve">
+    <value>Iniciando operaciones...</value>
+  </data>
+  <data name="ReadingInfo" xml:space="preserve">
+    <value>Leyendo información del dispositivo ...</value>
+  </data>
+  <data name="ReadingInfoFailed" xml:space="preserve">
+    <value>Error al leer la información del dispositivo, el dispositivo se reiniciará en 5 segundos.</value>
+  </data>
+  <data name="ResetFailed" xml:space="preserve">
+    <value>Error al reiniciar el dispositivo! Inténtalo de nuevo!</value>
+  </data>
+  <data name="ReviseFailed" xml:space="preserve">
+    <value>Error al descargar el código de revisión, la red está sobrecargada!</value>
+  </data>
+  <data name="Server" xml:space="preserve">
+    <value>Servidor</value>
+  </data>
+  <data name="SizeIsNull" xml:space="preserve">
+    <value>No hay datos!</value>
+  </data>
+  <data name="SwitchToAtmel" xml:space="preserve">
+    <value>Error al cambiar a Atmel, por favor reconecte el USB e inténtelo de nuevo!</value>
+  </data>
+  <data name="SwitchToBooreeFailure" xml:space="preserve">
+    <value>Error al cambiar a Booree, por favor reconecte el USB e inténtelo de nuevo!</value>
+  </data>
+  <data name="UserAuthentication" xml:space="preserve">
+    <value>Autenticación de usuario ... </value>
+  </data>
+  <data name="UserDatabaseFailed" xml:space="preserve">
+    <value>Error al descargar la base de datos de usuario, la red está sobrecargada!</value>
+  </data>
+  <data name="VoiceFailed" xml:space="preserve">
+    <value>Error al descargar la voz, la red está sobrecargada!</value>
+  </data>
+  <data name="VoiceTableFailed" xml:space="preserve">
+    <value>Error al descargar la tabla de voces, la red está sobrecargada!</value>
+  </data>
+  <data name="VoiceTableUpdate" xml:space="preserve">
+    <value>Actualizando tabla de voces ...</value>
+  </data>
+  <data name="VoiceUpdate" xml:space="preserve">
+    <value>Actualizando voces ...</value>
+  </data>
+  <data name="WelcomeSpeechUpdate" xml:space="preserve">
+    <value>Actualizando mensaje de bienvenida ...</value>
+  </data>
+  <data name="WelcomeSpeechVoiceFailed" xml:space="preserve">
+    <value>Error al descargar la voz del mensaje de bienvenida, la red está sobrecargada!</value>
+  </data>
+  <data name="WriteDatabaseFailed" xml:space="preserve">
+    <value>Error al escribir la base de datos! Inténtelo de nuevo!</value>
+  </data>
+  <data name="WriteInitializationFailure" xml:space="preserve">
+    <value>Error al inicializar el dispositivo! Inténtelo de nuevo! (Escritura)</value>
+  </data>
+  <data name="WriteResetFailed" xml:space="preserve">
+    <value>Error al reiniciar el dispositivo! Inténtalo de nuevo! (Escritura)</value>
+  </data>
+  <data name="WriteVoiceFailed" xml:space="preserve">
+    <value>Error al escribir la voz! Inténtalo de nuevo!</value>
+  </data>
+  <data name="WriteVoiceTableFailed" xml:space="preserve">
+    <value>Error al escribir la tabla de voces! Inténtelo de nuevo!</value>
+  </data>
+  <data name="WriteWelcomeSpeechVoiceFailed" xml:space="preserve">
+    <value>Error al escribir la voz de bienvenida! Inténtelo de nuevo!</value>
+  </data>
+  <data name="WrongModel" xml:space="preserve">
+    <value>Por favor, seleccione el modelo correcto!</value>
+  </data>
+</root>
