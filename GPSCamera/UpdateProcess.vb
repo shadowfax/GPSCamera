@@ -153,6 +153,15 @@ Public Class UpdateProcess
         End Set
     End Property
 
+    Public Property FilePath As String
+        Get
+            Return m_FilePath
+        End Get
+        Set(ByVal value As String)
+            m_FilePath = value
+        End Set
+    End Property
+
     Private Property _WorkTimer As WorkTimer
         <DebuggerNonUserCode()> _
         Get
@@ -1054,30 +1063,40 @@ Public Class UpdateProcess
                 Dim pRN As String = System.Web.HttpUtility.UrlEncode(Convert.ToBase64String(Me.m_HostInfo.Password))
                 Dim download As New Client.Download.ClientDownload(pName)
                 Dim download2 As Client.Download.ClientDownload = download
-                Select Case download2.Name
-                    Case "DBG"
-                        download2.Url = Me.GetServer(download2.Name, pSN, pRN)
-                        Dim str4 As String = ""
-                        Dim num5 As Short = CShort((Me.m_ChooseCounty.Count - 1))
-                        Dim j As Short = 0
-                        Do While (j <= num5)
-                            str4 = (str4 & Me.m_ChooseCounty.Item(j).ToString & "|")
-                            j = CShort((j + 1))
-                        Loop
-                        str4 = str4.Remove((str4.Length - 1), 1)
-                        download2.Url = New Uri(String.Concat(New String() {download2.Url.AbsoluteUri, "&area=", Me.m_DbgArea, "&county=", str4}))
-                        Exit Select
-                    Case "VOT", "VOC", "VOW"
-                        download2.Url = Me.GetServer(download2.Name, pSN, pRN)
-                        download2.Url = New Uri(Conversions.ToString(Operators.ConcatenateObject(((download2.Url.AbsoluteUri & "&area=") & Me.m_DbgArea & "&type="), Me.m_SimilarType.Item(Me.m_SimilarIndex))))
-                        Exit Select
-                    Case Else
-                        download2.Url = Me.GetServer(download2.Name, "", "")
-                        Exit Select
-                End Select
-                AddHandler download2.DownloadError, New Client.Download.ClientDownload.DownloadErrorEventHandler(AddressOf Me.ClientDownload_DownloadError)
-                Dim downloadThread As New System.Threading.Thread(New System.Threading.ThreadStart(AddressOf download.DownloadAsync))
-                downloadThread.Start()
+                If (download2.Name = "USERDBG") Then
+                    ' Added for database updates
+                    download2.Url = Me.GetServer(download2.Name, pSN, pRN)
+                    download2.Url = New Uri((download2.Url.AbsoluteUri & "&filepath=" & Me.FilePath))
+                    download2.FileName = Me.FilePath
+                    AddHandler download2.DownloadError, New Client.Download.ClientDownload.DownloadErrorEventHandler(AddressOf Me.ClientDownload_DownloadError)
+                    Dim uploadThread As New System.Threading.Thread(New System.Threading.ThreadStart(AddressOf download.UploadFileAsync))
+                    uploadThread.Start()
+                Else
+                    Select Case download2.Name
+                        Case "DBG"
+                            download2.Url = Me.GetServer(download2.Name, pSN, pRN)
+                            Dim str4 As String = ""
+                            Dim num5 As Short = CShort((Me.m_ChooseCounty.Count - 1))
+                            Dim j As Short = 0
+                            Do While (j <= num5)
+                                str4 = (str4 & Me.m_ChooseCounty.Item(j).ToString & "|")
+                                j = CShort((j + 1))
+                            Loop
+                            str4 = str4.Remove((str4.Length - 1), 1)
+                            download2.Url = New Uri(String.Concat(New String() {download2.Url.AbsoluteUri, "&area=", Me.m_DbgArea, "&county=", str4}))
+                            Exit Select
+                        Case "VOT", "VOC", "VOW"
+                            download2.Url = Me.GetServer(download2.Name, pSN, pRN)
+                            download2.Url = New Uri(Conversions.ToString(Operators.ConcatenateObject(((download2.Url.AbsoluteUri & "&area=") & Me.m_DbgArea & "&type="), Me.m_SimilarType.Item(Me.m_SimilarIndex))))
+                            Exit Select
+                        Case Else
+                            download2.Url = Me.GetServer(download2.Name, "", "")
+                            Exit Select
+                    End Select
+                    AddHandler download2.DownloadError, New Client.Download.ClientDownload.DownloadErrorEventHandler(AddressOf Me.ClientDownload_DownloadError)
+                    Dim downloadThread As New System.Threading.Thread(New System.Threading.ThreadStart(AddressOf download.DownloadAsync))
+                    downloadThread.Start()
+                End If
                 Me._Clients.Remove(download2.Name)
                 Me._Clients.Add(download2.Name, download)
                 download2 = Nothing
@@ -1758,7 +1777,7 @@ Label_019F:
         Me.m_Url = "http://{0}/GM/com_data_file.aspx"
         Me._DownloadTimer.Interval = 1000
         Me.m_IsWork = False
-
+        Me.m_FilePath = String.Empty
 
     End Sub
 

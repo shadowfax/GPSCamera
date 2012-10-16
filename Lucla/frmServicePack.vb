@@ -251,7 +251,18 @@ Public Class frmServicePack
     End Sub
 
 
-
+    Public WriteOnly Property OperationMode() As Short
+        Set(ByVal value As Short)
+            Select Case value
+                Case 1
+                    Panel1.Visible = False
+                    Panel2.Visible = True
+                Case Else
+                    Panel1.Visible = True
+                    Panel2.Visible = False
+            End Select
+        End Set
+    End Property
 
 
 
@@ -389,6 +400,35 @@ Public Class frmServicePack
         End Try
     End Sub
 
+    Private Sub CheckDataValidity_Completed(ByVal pFinish As Boolean, ByVal pStatus As String) Handles Me.CheckCompleted
+        If Not String.IsNullOrEmpty(pStatus) Then
+            Me.DisplayStatus(pStatus)
+        End If
+        If Not pFinish Then
+            Me.GuiControl(True)
+        Else
+            Dim process As GPSCamera.UpdateProcess = Me._UpdateProcess
+            process.UserId = "CVIJMDSAUG"
+            process.UserPassword = "3B2C6F-B3CCEF-88D9F3-6C2B5A-ABE3CF"
+            VBMath.Randomize()
+            process.ServerIndex = Conversions.ToInteger(Interaction.IIf((Me.ServerIndex > GPSCamera.Data.GetServer(Me.m_SelectLng).Count), 0, Me.m_ServerIndex))
+            process.Type = Me.m_Type
+            process.FilePath = Me.tbPath.Text
+            ' The variable seems to be unused
+            'process.UserDbgAmount = Me.UserDbgAmount
+            process.SelectLng = Me.m_SelectLng
+            If (String.IsNullOrEmpty(process.UserId) And String.IsNullOrEmpty(process.UserPassword)) Then
+                Interaction.MsgBox(My.Resources.Lucla.MSG_IdAndPasswordCanNotEmpty, MsgBoxStyle.Exclamation, Me.Text)
+            Else
+                process = Nothing
+                Dim process1 As GPSCamera.UpdateProcess = Me._UpdateProcess
+                Dim processThread As New System.Threading.Thread(New System.Threading.ThreadStart(AddressOf process1.Run))
+                processThread.Start()
+            End If
+        End If
+    End Sub
+
+
 
 
 
@@ -431,6 +471,7 @@ Public Class frmServicePack
         Me.picFace.Image = Me.ProductPic
         Me.SetTimerValue()
         Me.btnUpdate.Text = My.Resources.Lucla.btnUpdate
+        Me.btnUpdateDbg.Text = My.Resources.Lucla.btnUpdate
         Me.ckCheckVersion.Text = My.Resources.Lucla.ckCheckVersion
         Me.lblServer.Text = My.Resources.Lucla.lblServer
         Me.cboServer.Items.Clear()
@@ -446,6 +487,7 @@ Public Class frmServicePack
         Loop
         Me.cboServer.SelectedIndex = Me.ServerIndex
     End Sub
+
     Private Sub pbFace_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles picFace.Click
 
     End Sub
@@ -516,7 +558,7 @@ Public Class frmServicePack
             Me.DisplayDbgVersion("")
             Me.DisplayStatus("Data Authentication")
             Me.btnOpenFile.Enabled = False
-            Me.btnUpdate.Enabled = False
+            Me.btnUpdateDbg.Enabled = False
             Dim checkThread As New System.Threading.Thread(New System.Threading.ThreadStart(AddressOf Me.CheckDataValidity))
             checkThread.Start()
         Catch exception1 As Exception

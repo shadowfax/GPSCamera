@@ -550,11 +550,25 @@ Public NotInheritable Class SplashScreen1
     End Sub
 
     Private Sub XDisplayShow()
+        Dim formSelectOps As New FormSelectOps
+        'Dim operation As FormSelectOps.DialogResults = FormSelectOps.ShowDialog()
+        Dim operation As FormSelectOps.CustomDialogResult = formSelectOps.ShowDialog()
+        FormSelectOps.Dispose()
+
         Dim frmServicePack As frmServicePack = My.Forms.frmServicePack
         frmServicePack.ServerIndex = Me.m_MinIndex
         frmServicePack.Type = Me.m_Type
         frmServicePack.ProductPic = Me.m_ProductPic
         'frmServicePack.SelectLng = Me.m_Lng
+        Select Case operation
+            Case formSelectOps.CustomDialogResult.Database
+                frmServicePack.OperationMode = 1
+            Case formSelectOps.CustomDialogResult.Firmware
+                frmServicePack.OperationMode = 0
+            Case Else
+                ' Firmware default
+                frmServicePack.OperationMode = 0
+        End Select
         frmServicePack.Show()
         frmServicePack = Nothing
         Me.Close()

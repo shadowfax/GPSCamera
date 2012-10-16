@@ -12,6 +12,7 @@ Namespace Client.Download
         Private _m_Timer As System.Timers.Timer
         Private m_Data As Byte()
         Private m_DataSize As Long
+        Private m_FileName As String
         Private m_IsCancelled As Boolean
         Private m_IsDownloaded As Boolean
         Private m_Kbs As Single
@@ -287,6 +288,32 @@ Namespace Client.Download
             End Try
         End Sub
 
+        Public Overloads Sub UploadFileAsync()
+            Dim downloadErrorEvent As DownloadErrorEventHandler
+            Try
+                Me.Initionlize()
+                Me.m_Timer.Start()
+                MyBase.UploadFileAsync(Me.Url, "POST", Me.m_FileName)
+            Catch exception1 As System.Net.WebException
+                ProjectData.SetProjectError(exception1)
+                Dim e As System.Net.WebException = exception1
+                downloadErrorEvent = Me.DownloadErrorEvent
+                If (Not downloadErrorEvent Is Nothing) Then
+                    downloadErrorEvent.Invoke(Me, e)
+                End If
+                ProjectData.ClearProjectError()
+            Catch exception3 As Exception
+                ProjectData.SetProjectError(exception3)
+                Dim exception2 As Exception = exception3
+                downloadErrorEvent = Me.DownloadErrorEvent
+                If (Not downloadErrorEvent Is Nothing) Then
+                    downloadErrorEvent.Invoke(Me, exception2)
+                End If
+                ProjectData.ClearProjectError()
+            End Try
+        End Sub
+
+
 
         ' Properties
         Public ReadOnly Property Data As Byte()
@@ -299,6 +326,15 @@ Namespace Client.Download
             Get
                 Return CInt(Me.m_DataSize)
             End Get
+        End Property
+
+        Public Property FileName As String
+            Get
+                Return m_FileName
+            End Get
+            Set(ByVal value As String)
+                m_FileName = value
+            End Set
         End Property
 
         Public ReadOnly Property IsCancelled As Boolean

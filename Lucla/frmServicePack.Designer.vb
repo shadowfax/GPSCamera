@@ -150,7 +150,6 @@ Partial Class frmServicePack
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(497, 60)
         Me.Panel2.TabIndex = 10
-        Me.Panel2.Visible = False
         '
         'btnOpenFile
         '
