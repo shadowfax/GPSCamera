@@ -12,8 +12,13 @@ Public Class frmServicePack
     Private m_Timer As System.Timers.Timer
     Private m_Type As String
 
+    ' For database updates
+    Private m_UserDbgAmount As Integer
+
+
 #Region "    Delegates "
 
+    ' For updates
     Private Delegate Sub Delegate_DisplayDbgVersion(ByVal pVersion As String)
     Private Delegate Sub Delegate_DisplayPicCompleted(ByVal pPicture As Bitmap)
     Private Delegate Sub Delegate_DisplayPort(ByVal pPortName As String)
@@ -21,6 +26,16 @@ Public Class frmServicePack
     Private Delegate Sub Delegate_DisplayStatus(ByVal pStatus As String)
     Private Delegate Sub Delegate_DisplayTime(ByVal pTime As String)
     Private Delegate Sub Delegate_GuiControl(ByVal pEnabled As Boolean)
+
+    ' For updating database
+    Private Delegate Sub CheckCompletedEventHandler(ByVal pFinish As Boolean, ByVal pStatus As String)
+
+
+#End Region
+
+#Region "    Events "
+
+    Private Event CheckCompleted As CheckCompletedEventHandler
 
 #End Region
 
@@ -270,6 +285,114 @@ Public Class frmServicePack
         End Set
     End Property
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <remarks>Used to update database</remarks>
+    Private Sub CheckDataValidity()
+        Dim reader As System.IO.StreamReader = Nothing
+        Dim checkCompletedEvent As CheckCompletedEventHandler
+        Dim list As New ArrayList
+        Try
+            reader = New System.IO.StreamReader(Me.tbPath.Text, System.Text.Encoding.ASCII)
+            Dim i As Integer = 0
+            Do While (reader.Peek >= 0)
+                list.Add(reader.ReadLine)
+                i += 1
+            Loop
+            reader.Close()
+            reader.Dispose()
+            If (list.Count < 2) Then
+                Me.DisplayStatus("Database is not enough (under MOQ).")
+                Throw New Exception("Database is not enough (under MOQ).")
+            End If
+            Dim num2 As Integer = 0
+            Dim flag As Boolean = False
+            Dim strArray As String() = DirectCast(NewLateBinding.LateGet(list.Item(0), Nothing, "Split", New Object() {","}, Nothing, Nothing, Nothing), String())
+            Dim hashtable As New Hashtable
+            Dim num5 As Short = CShort((strArray.Length - 1))
+            Dim j As Short = 0
+            Do While (j <= num5)
+                hashtable.Add(Strings.UCase(strArray(j)), j)
+                j = CShort((j + 1))
+            Loop
+            Dim numArray5 As Short() = GPSCamera.Data.GetItemRange("X")
+            Dim numArray6 As Short() = GPSCamera.Data.GetItemRange("Y")
+            Dim numArray4 As Short() = GPSCamera.Data.GetItemRange("TYPE")
+            Dim numArray3 As Short() = GPSCamera.Data.GetItemRange("SPEED")
+            Dim numArray2 As Short() = GPSCamera.Data.GetItemRange("DIRTYPE")
+            Dim numArray As Short() = GPSCamera.Data.GetItemRange("DIRECTION")
+            Dim num6 As Integer = (list.Count - 1)
+            Dim k As Integer = 1
+            Do While (k <= num6)
+                num2 = k
+                If Not String.IsNullOrEmpty(list.Item(k).ToString.Replace(ChrW(13), "").Replace(ChrW(10), "")) Then
+                    Dim strArray2 As String() = DirectCast(NewLateBinding.LateGet(list.Item(k), Nothing, "Split", New Object() {","}, Nothing, Nothing, Nothing), String())
+                    If (strArray2.Length < strArray.Length) Then
+                        flag = True
+                        Exit Do
+                    End If
+                    Dim inputStr As String = strArray2(Conversions.ToInteger(hashtable.Item("X")))
+                    Dim str6 As String = strArray2(Conversions.ToInteger(hashtable.Item("Y")))
+                    Dim str4 As String = strArray2(Conversions.ToInteger(hashtable.Item("TYPE")))
+                    Dim str3 As String = strArray2(Conversions.ToInteger(hashtable.Item("SPEED")))
+                    Dim str2 As String = strArray2(Conversions.ToInteger(hashtable.Item("DIRTYPE")))
+                    Dim str As String = strArray2(Conversions.ToInteger(hashtable.Item("DIRECTION")))
+                    If (((Conversion.Val(inputStr) < numArray5(0)) Or (Conversion.Val(inputStr) > numArray5(1))) Or String.IsNullOrEmpty(inputStr)) Then
+                        flag = True
+                    End If
+                    If (((Conversion.Val(str6) < numArray6(0)) Or (Conversion.Val(str6) > numArray6(1))) Or String.IsNullOrEmpty(str6)) Then
+                        flag = True
+                    End If
+                    If (((Conversion.Val(str4) < numArray4(0)) Or (Conversion.Val(str4) > numArray4(1))) Or String.IsNullOrEmpty(str4)) Then
+                        flag = True
+                    End If
+                    If (((Conversion.Val(str3) < numArray3(0)) Or (Conversion.Val(str3) > numArray3(1))) Or String.IsNullOrEmpty(str3)) Then
+                        flag = True
+                    End If
+                    If (((Conversion.Val(str2) < numArray2(0)) Or (Conversion.Val(str2) > numArray2(1))) Or String.IsNullOrEmpty(str2)) Then
+                        flag = True
+                    End If
+                    If (str.IndexOf("//") > -1) Then
+                        str = str.Split(New Char() {"/"c})(0)
+                    End If
+                    If (((Conversion.Val(str) < numArray(0)) Or (Conversion.Val(str) > numArray(1))) Or String.IsNullOrEmpty(str)) Then
+                        flag = True
+                    End If
+                    If flag Then
+                        Exit Do
+                    End If
+                End If
+                k += 1
+            Loop
+            If flag Then
+                Me.DisplayStatus("Database was error, Please check number """ & Conversions.ToString(num2) & """ at the database list.")
+                Throw New Exception(("Database was error, Please check number """ & Conversions.ToString(num2) & """ at the database list."))
+            End If
+            Me.m_UserDbgAmount = list.Count
+            checkCompletedEvent = Me.CheckCompletedEvent
+            If (Not checkCompletedEvent Is Nothing) Then
+                checkCompletedEvent.Invoke(True, "")
+            End If
+        Catch exception1 As Exception
+            ProjectData.SetProjectError(exception1)
+            Dim exception As Exception = exception1
+            checkCompletedEvent = Me.CheckCompletedEvent
+            If (Not checkCompletedEvent Is Nothing) Then
+                checkCompletedEvent.Invoke(False, exception.Message)
+            End If
+            ProjectData.ClearProjectError()
+        Finally
+            If (Not reader Is Nothing) Then
+                reader.Dispose()
+            End If
+        End Try
+    End Sub
+
+
+
+
+
     Private Sub m_Timer_Tick(ByVal sender As Object, ByVal e As System.Timers.ElapsedEventArgs)
         If (Me.m_PicIndex > (Me.m_PicArrayList.Count - 1)) Then
             Me.m_PicIndex = 0
@@ -364,6 +487,44 @@ Public Class frmServicePack
         Me.m_PicIndex = 0
         Me.m_Timer = New System.Timers.Timer
 
+
+    End Sub
+
+    Private Sub btnOpenFile_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnOpenFile.Click
+        Dim dialog2 As New OpenFileDialog
+        dialog2.CheckFileExists = True
+        dialog2.CheckPathExists = True
+        dialog2.Filter = "*.txt|*.txt"
+        dialog2.InitialDirectory = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop)
+        If (dialog2.ShowDialog = DialogResult.OK) Then
+            Me.tbPath.Text = dialog2.FileName
+        End If
+        dialog2 = Nothing
+    End Sub
+
+    Private Sub btnUpdateDbg_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnUpdateDbg.Click
+        Try
+            Dim text As String = Me.tbPath.Text
+            If String.IsNullOrEmpty([text]) Then
+                Throw New Exception("The file path is null.")
+            End If
+            If ([text].Substring(([text].Length - 3), 3) <> "txt") Then
+                Throw New Exception("The file type is error.")
+            End If
+            Me.DisplayPort("")
+            Me.DisplayTime("")
+            Me.DisplayDbgVersion("")
+            Me.DisplayStatus("Data Authentication")
+            Me.btnOpenFile.Enabled = False
+            Me.btnUpdate.Enabled = False
+            Dim checkThread As New System.Threading.Thread(New System.Threading.ThreadStart(AddressOf Me.CheckDataValidity))
+            checkThread.Start()
+        Catch exception1 As Exception
+            ProjectData.SetProjectError(exception1)
+            Dim exception As Exception = exception1
+            Me.DisplayStatus(exception.Message)
+            ProjectData.ClearProjectError()
+        End Try
 
     End Sub
 End Class

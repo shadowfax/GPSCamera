@@ -11,6 +11,27 @@
         End Get
     End Property
 
+    Public Shared ReadOnly Property GetItemRange(ByVal pItem As String) As Short()
+        Get
+            Select Case Strings.UCase(pItem)
+                Case "X"
+                    Return New Short() {-180, 180}
+                Case "Y"
+                    Return New Short() {-90, 90}
+                Case "TYPE"
+                    Return New Short() {1, 7}
+                Case "SPEED"
+                    Return New Short() {0, 160}
+                Case "DIRTYPE"
+                    Return New Short() {0, 2}
+                Case "DIRECTION"
+                    Return New Short() {0, 360}
+            End Select
+            Return New Short() {-999, &H3E7}
+        End Get
+    End Property
+
+
     Public Shared ReadOnly Property GetName(ByVal pLng As String) As String()
         Get
             Dim str As String = pLng

@@ -33,9 +33,15 @@ Partial Class frmServicePack
         Me.ckCheckVersion = New System.Windows.Forms.CheckBox()
         Me.cboServer = New System.Windows.Forms.ComboBox()
         Me.lblServer = New System.Windows.Forms.Label()
+        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.btnOpenFile = New System.Windows.Forms.Button()
+        Me.tbPath = New System.Windows.Forms.TextBox()
+        Me.btnUpdateDbg = New System.Windows.Forms.Button()
+        Me.Label1 = New System.Windows.Forms.Label()
         CType(Me.picFace, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StatusStrip1.SuspendLayout()
         Me.Panel1.SuspendLayout()
+        Me.Panel2.SuspendLayout()
         Me.SuspendLayout()
         '
         'picFace
@@ -134,11 +140,60 @@ Partial Class frmServicePack
         Me.lblServer.TabIndex = 5
         Me.lblServer.Text = "Server"
         '
+        'Panel2
+        '
+        Me.Panel2.Controls.Add(Me.btnOpenFile)
+        Me.Panel2.Controls.Add(Me.tbPath)
+        Me.Panel2.Controls.Add(Me.btnUpdateDbg)
+        Me.Panel2.Controls.Add(Me.Label1)
+        Me.Panel2.Location = New System.Drawing.Point(0, 300)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(497, 60)
+        Me.Panel2.TabIndex = 10
+        Me.Panel2.Visible = False
+        '
+        'btnOpenFile
+        '
+        Me.btnOpenFile.Location = New System.Drawing.Point(277, 17)
+        Me.btnOpenFile.Name = "btnOpenFile"
+        Me.btnOpenFile.Size = New System.Drawing.Size(33, 23)
+        Me.btnOpenFile.TabIndex = 10
+        Me.btnOpenFile.Text = "..."
+        Me.btnOpenFile.UseVisualStyleBackColor = True
+        '
+        'tbPath
+        '
+        Me.tbPath.BackColor = System.Drawing.SystemColors.Window
+        Me.tbPath.Location = New System.Drawing.Point(37, 19)
+        Me.tbPath.Name = "tbPath"
+        Me.tbPath.ReadOnly = True
+        Me.tbPath.Size = New System.Drawing.Size(234, 20)
+        Me.tbPath.TabIndex = 9
+        '
+        'btnUpdateDbg
+        '
+        Me.btnUpdateDbg.Location = New System.Drawing.Point(360, 11)
+        Me.btnUpdateDbg.Name = "btnUpdateDbg"
+        Me.btnUpdateDbg.Size = New System.Drawing.Size(120, 34)
+        Me.btnUpdateDbg.TabIndex = 8
+        Me.btnUpdateDbg.Text = "Update"
+        Me.btnUpdateDbg.UseVisualStyleBackColor = True
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(8, 22)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(23, 13)
+        Me.Label1.TabIndex = 5
+        Me.Label1.Text = "File"
+        '
         'frmServicePack
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(496, 382)
+        Me.Controls.Add(Me.Panel2)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.picFace)
@@ -153,6 +208,8 @@ Partial Class frmServicePack
         Me.StatusStrip1.PerformLayout()
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
+        Me.Panel2.ResumeLayout(False)
+        Me.Panel2.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -168,5 +225,10 @@ Partial Class frmServicePack
     Friend WithEvents tssTime As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents tssDbgVersion As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents tssStatus As System.Windows.Forms.ToolStripStatusLabel
+    Friend WithEvents Panel2 As System.Windows.Forms.Panel
+    Friend WithEvents btnOpenFile As System.Windows.Forms.Button
+    Friend WithEvents tbPath As System.Windows.Forms.TextBox
+    Friend WithEvents btnUpdateDbg As System.Windows.Forms.Button
+    Friend WithEvents Label1 As System.Windows.Forms.Label
 
 End Class
